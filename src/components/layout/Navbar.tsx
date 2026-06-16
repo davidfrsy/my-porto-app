@@ -1,10 +1,10 @@
-import { User, Briefcase, Code, Mail } from "lucide-react"; 
+import { User, Briefcase, Code, Mail } from "lucide-react";
 
 const navItems = [
-  { id: 0, icon: <User size={24} />, label: "About" },
-  { id: 1, icon: <Briefcase size={24} />, label: "Experience" },
-  { id: 2, icon: <Code size={24} />, label: "Projects" },
-  { id: 3, icon: <Mail size={24} />, label: "Contact" },
+  { id: 0, icon: <User size={22} />, label: "About" },
+  { id: 1, icon: <Briefcase size={22} />, label: "Experience" },
+  { id: 2, icon: <Code size={22} />, label: "Projects" },
+  { id: 3, icon: <Mail size={22} />, label: "Contact" },
 ];
 
 type NavbarProps = {
@@ -14,21 +14,34 @@ type NavbarProps = {
 
 export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   return (
-    <nav className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-8 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full shadow-2xl">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setActiveTab(item.id)}
-            className={`transition-all duration-300 p-2 rounded-full ${
-              activeTab === item.id
-                ? "bg-blue-500 text-white scale-110 shadow-lg"
-                : "text-gray-400 hover:text-gray-200"
-            }`}
-          >
-            {item.icon}
-          </button>
-        ))}
+    <nav className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 md:bottom-8">
+      <div className="flex items-center gap-3 rounded-full border border-white/10 bg-slate-900/70 px-4 py-3 shadow-2xl shadow-sky-950/30 backdrop-blur-xl md:gap-5 md:px-6">
+        {navItems.map((item) => {
+          const isActive = activeTab === item.id;
+
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              aria-label={item.label}
+              className={`group relative flex items-center gap-2 rounded-full px-3 py-2 text-sm transition-all duration-300 md:px-4 ${
+                isActive
+                  ? "bg-sky-500 text-white shadow-lg shadow-sky-500/25"
+                  : "text-slate-400 hover:bg-white/5 hover:text-slate-100"
+              }`}
+            >
+              {item.icon}
+
+              <span
+                className={`hidden text-sm font-medium md:inline ${
+                  isActive ? "text-white" : "text-slate-400 group-hover:text-slate-100"
+                }`}
+              >
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </nav>
   );
